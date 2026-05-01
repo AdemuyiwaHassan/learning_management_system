@@ -102,18 +102,27 @@ export const getCurrentAcademicYear = async (
 };
 
 // @desc    Update Academic Year
-// @route   PUT /api/academic-years/:id
+// @route   PATCH /api/academic-years/update/:id
 // @access  Private/Admin
 export const updateAcademicYear = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
   try {
+    if (
+      typeof req.params.id !== "string" ||
+      !Types.ObjectId.isValid(req.params.id)
+    ) {
+      res.status(400).json({ message: "Invalid Academic Year ID" });
+      return;
+    }
+
     const { isCurrent } = req.body;
     if (isCurrent) {
       await AcademicYear.updateMany(
-        // { _id: { $ne: req.params.id  } },
-        { _id: { $ne: new Types.ObjectId(req.params.id as string) } },
+        // { _id: { $ne: req.params.id } },
+        { _id: { $ne: new Types.ObjectId(req.params.id) } },
+
         { isCurrent: false },
       );
     }
@@ -127,7 +136,7 @@ export const updateAcademicYear = async (
     }
     await logActivity({
       userId: (req as any).user._id,
-      action: `Created academic year ${updatedYear?.name}`,
+      action: `Updated academic year ${updatedYear?.name}`,
     });
     res.status(200).json(updatedYear);
   } catch (error) {
@@ -136,7 +145,7 @@ export const updateAcademicYear = async (
 };
 
 // @desc    Delete Academic Year
-// @route   DELETE /api/academic-years/:id
+// @route   DELETE /api/academic-years/delete/:id
 // @access  Private/Admin
 export const deleteAcademicYear = async (
   req: Request,

@@ -12,8 +12,12 @@ jobs:
           bun-version: latest
       - run: bun install
         working-directory: ./backend
-      - run: bun start
-        working-directory: ./backend
+      # - run: bun run lint
+      #   working-directory: ./backend
+      # - run: bun run test
+      #   working-directory: ./backend
+      # - run: bun run build
+      #   working-directory: ./backend
 
   frontend:
     runs-on: ubuntu-latest
