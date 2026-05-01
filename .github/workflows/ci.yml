@@ -12,7 +12,9 @@ jobs:
           bun-version: latest
       - run: bun install
         working-directory: ./backend
-      - run: bun start
+      - run: bun run lint
+        working-directory: ./backend
+      - run: bun run test
         working-directory: ./backend
 
   frontend:

@@ -102,7 +102,7 @@ export const getCurrentAcademicYear = async (
 };
 
 // @desc    Update Academic Year
-// @route   PUT /api/academic-years/:id
+// @route   PATCH /api/academic-years/update/:id
 // @access  Private/Admin
 export const updateAcademicYear = async (
   req: Request,
@@ -145,7 +145,7 @@ export const updateAcademicYear = async (
 };
 
 // @desc    Delete Academic Year
-// @route   DELETE /api/academic-years/:id
+// @route   DELETE /api/academic-years/delete/:id
 // @access  Private/Admin
 export const deleteAcademicYear = async (
   req: Request,
