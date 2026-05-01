@@ -16,6 +16,8 @@ jobs:
       #   working-directory: ./backend
       # - run: bun run test
       #   working-directory: ./backend
+      # - run: bun run build
+      #   working-directory: ./backend
 
   frontend:
     runs-on: ubuntu-latest
