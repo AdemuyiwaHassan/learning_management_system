@@ -145,9 +145,9 @@ export const getUserProfile = async (req: AuthRequest, res: Response) => {
   }
 };
 
-// @desc    Get User Profile
-// @route   GET /api/users/profile
-// @access  Private
+// @desc    Get All Users Profile
+// @route   GET /api/users
+// @access  Private (Admin)
 
 export const getUsers = async (
   req: AuthRequest,
