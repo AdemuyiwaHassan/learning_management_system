@@ -109,11 +109,20 @@ export const updateAcademicYear = async (
   res: Response,
 ): Promise<void> => {
   try {
+    if (
+      typeof req.params.id !== "string" ||
+      !Types.ObjectId.isValid(req.params.id)
+    ) {
+      res.status(400).json({ message: "Invalid Academic Year ID" });
+      return;
+    }
+
     const { isCurrent } = req.body;
     if (isCurrent) {
       await AcademicYear.updateMany(
-        // { _id: { $ne: req.params.id  } },
-        { _id: { $ne: new Types.ObjectId(req.params.id as string) } },
+        // { _id: { $ne: req.params.id } },
+        { _id: { $ne: new Types.ObjectId(req.params.id) } },
+
         { isCurrent: false },
       );
     }
@@ -127,7 +136,7 @@ export const updateAcademicYear = async (
     }
     await logActivity({
       userId: (req as any).user._id,
-      action: `Created academic year ${updatedYear?.name}`,
+      action: `Updated academic year ${updatedYear?.name}`,
     });
     res.status(200).json(updatedYear);
   } catch (error) {
