@@ -12,6 +12,7 @@ import { connectDB } from "./config/db";
 import userRoutes from "./routes/user";
 import logsRouter from "./routes/activitieslog";
 import academicYearRouter from "./routes/academicYear";
+import levelRouter from "./routes/level";
 
 dotenv.config();
 
@@ -43,6 +44,7 @@ app.get("/api/health", (req: Request, res: Response) => {
 app.use("/api/users", userRoutes);
 app.use("/api/activities", logsRouter);
 app.use("/api/academic-years", academicYearRouter);
+app.use("/api/levels", levelRouter);
 
 // global error handler
 app.use((err: Error, req: Request, res: Response) => {
