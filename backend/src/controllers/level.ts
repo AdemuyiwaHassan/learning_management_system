@@ -78,7 +78,7 @@ export const getAllLevels = async (
 };
 
 // @desc   Update level details
-// @route  PUT /api/levels/:id
+// @route  PUT /api/levels/update/:id
 // @access Private/Admin
 export const updateLevel = async (
   req: Request,
@@ -120,6 +120,35 @@ export const updateLevel = async (
     });
 
     res.status(200).json(updatedLevel);
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error });
+  }
+};
+
+// @desc    Delete a Level
+// @route   DELETE /api/levels/delete/:id
+// @access  Private/Admin
+export const deleteLevel = async (req: Request, res: Response) => {
+  try {
+    if (
+      typeof req.params.id !== "string" ||
+      !Types.ObjectId.isValid(req.params.id)
+    ) {
+      res.status(400).json({ message: "Invalid Level ID" });
+      return;
+    }
+    const level = await Level.findById(req.params.id);
+    if (!level) {
+      res.status(404).json({ message: "Level not found" });
+      return;
+    } else {
+      await level.deleteOne();
+      await logActivity({
+        userId: (req as any).user._id,
+        action: `Deleted level: ${level.name}`,
+      });
+      res.status(200).json({ message: "Level deleted successfully" });
+    }
   } catch (error) {
     res.status(500).json({ message: "Server Error", error });
   }

@@ -3,6 +3,7 @@ import {
   createLevel,
   updateLevel,
   getAllLevels,
+  deleteLevel,
 } from "../controllers/level.ts";
 import { authorize, protect } from "../middlewares/auth.ts";
 
@@ -15,5 +16,8 @@ levelRouter
   .patch(protect, authorize(["admin"]), updateLevel);
 
 levelRouter.route("/").get(protect, authorize(["admin"]), getAllLevels);
+levelRouter
+  .route("/delete/:id")
+  .delete(protect, authorize(["admin"]), deleteLevel);
 
 export default levelRouter;
